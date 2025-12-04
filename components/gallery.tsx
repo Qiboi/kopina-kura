@@ -44,49 +44,79 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
         return () => window.removeEventListener('keydown', onKey)
     }, [idx, showPrev, showNext])
 
+    // viewport props for on-scroll animations (disabled when reduced motion is requested)
+    const viewportProps = reduce ? undefined : { viewport: { once: true, amount: 0.2 } }
+
     return (
         <section
             aria-labelledby="gallery-title"
             className="py-12 text-primary-foreground px-6"
         >
-            <div className="max-w-6xl mx-auto px-6 text-center">
-                <span className="inline-block bg-primary-foreground text-accent px-3 py-1 rounded-full text-sm font-bold">
+            <div className="max-w-6xl mx-auto text-center">
+                <motion.span
+                    {...(reduce ? {} : { initial: { opacity: 0, y: 6 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.45 } })}
+                    {...(viewportProps ?? {})}
+                    className="inline-block bg-primary-foreground text-accent px-3 py-1 rounded-full text-sm font-bold"
+                >
                     Gallery
-                </span>
+                </motion.span>
 
-                <h2 id="gallery-title" className="mt-4 text-3xl md:text-4xl font-serif font-bold">
+                <motion.h2
+                    id="gallery-title"
+                    {...(reduce ? {} : { initial: { opacity: 0, y: 10 }, whileInView: { opacity: 1, y: 0 }, transition: { delay: 0.04, duration: 0.55 } })}
+                    {...(viewportProps ?? {})}
+                    className="mt-4 text-3xl md:text-4xl font-serif font-bold"
+                >
                     Experience the Vibe
-                </h2>
+                </motion.h2>
 
-                <p className="mt-2 text-sm md:text-base text-primary-foreground/90 max-w-2xl mx-auto">
+                <motion.p
+                    {...(reduce ? {} : { initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { delay: 0.08, duration: 0.6 } })}
+                    {...(viewportProps ?? {})}
+                    className="mt-2 text-sm md:text-base text-primary-foreground/90 max-w-2xl mx-auto"
+                >
                     From cozy corners to rooftop views, discover the spaces that make Kopina Kura special
-                </p>
+                </motion.p>
 
                 {/* Grid */}
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
                     {images.map((img, i) => (
-                        <button
+                        <motion.div
                             key={i}
-                            onClick={() => open(i)}
-                            className="w-full rounded-lg overflow-hidden block focus:outline-none focus:ring-4 focus:ring-ring"
-                            aria-label={`Open gallery image ${i + 1}`}
+                            initial={reduce ? undefined : { opacity: 0, y: 10 }}
+                            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                            transition={{
+                                duration: reduce ? 0 : 0.45,
+                                delay: reduce ? 0 : i * 0.06,
+                            }}
+                            {...(viewportProps ?? {})}
                         >
-                            <div className="relative aspect-square">
-                                <Image
-                                    src={img.src}
-                                    alt={img.alt ?? `Gallery ${i + 1}`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 33vw"
-                                    className="object-cover hover:scale-105 transition-transform duration-300"
-                                    priority={i < 3}
-                                />
-                            </div>
-                        </button>
+                            <button
+                                onClick={() => open(i)}
+                                className="w-full rounded-lg overflow-hidden block focus:outline-none focus:ring-4 focus:ring-ring"
+                                aria-label={`Open gallery image ${i + 1}`}
+                            >
+                                <div className="relative aspect-square">
+                                    <Image
+                                        src={img.src}
+                                        alt={img.alt ?? `Gallery ${i + 1}`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="object-cover hover:scale-105 transition-transform duration-300"
+                                        priority={i < 3}
+                                    />
+                                </div>
+                            </button>
+                        </motion.div>
                     ))}
                 </div>
 
                 {/* Instagram CTA */}
-                <div className="mt-8">
+                <motion.div
+                    {...(reduce ? {} : { initial: { opacity: 0, y: 8 }, whileInView: { opacity: 1, y: 0 }, transition: { delay: 0.12, duration: 0.5 } })}
+                    {...(viewportProps ?? {})}
+                    className="mt-8"
+                >
                     <Button
                         size="lg"
                         className="bg-[#E1306C] text-white px-6 py-3 rounded-md inline-flex items-center gap-3"
@@ -97,7 +127,7 @@ export default function Gallery({ images }: { images: GalleryImage[] }) {
                         <Instagram size={16} />
                         Follow us on Instagram
                     </Button>
-                </div>
+                </motion.div>
             </div>
 
             {/* Lightbox */}

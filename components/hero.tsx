@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Wifi, Sun, Clock, Coffee, BookOpen, Star } from "lucide-react";
 
-export default function Hero({ content }: any) {
-    console.log(content)
+export default function Hero() {
     return (
         <section className="relative w-full">
             <div
@@ -25,14 +23,14 @@ export default function Hero({ content }: any) {
                     transition={{ duration: 0.7 }}
                     className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white"
                 >
-                    {/* ⭐ Rating Badge */}
+                    {/* Rating Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         className="inline-flex space-x-2 items-center bg-muted/70 px-4 py-1.5 rounded-full text-sm font-medium shadow-lg"
                     >
-                        <Star size={16} /> <span>Rated 4.9/5 from 1,106+ reviews</span>
+                        <Star fill="yellow" stroke="yellow" size={16} /> <span>Rated 4.9/5 from 1,106+ reviews</span>
                     </motion.div>
 
                     {/* Heading */}

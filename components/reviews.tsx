@@ -75,6 +75,9 @@ export default function ReviewsCarousel({
 
     if (!reviews || length === 0) return null;
 
+    // viewport props to trigger animations when element scrolls into view
+    const viewportProps = reduce ? undefined : { viewport: { once: true, amount: 0.3 } };
+
     return (
         <section className="py-12">
             <div className="text-center mb-2">
@@ -85,13 +88,13 @@ export default function ReviewsCarousel({
             </div>
 
             <div className="mx-auto px-6">
-                {/* Header area (left intentionally empty for balance) */}
-                {/* ganti blok lama dengan ini */}
+                {/* Rating block (will animate on scroll into view) */}
                 <div className="flex items-center justify-center mb-6 relative">
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.25, duration: reduce ? 0 : 0.45 }}
+                        initial={reduce ? undefined : { opacity: 0, scale: 0.94 }}
+                        whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.12, duration: reduce ? 0 : 0.45 }}
+                        {...(viewportProps ?? {})}
                         className="flex items-center gap-2"
                         role="region"
                         aria-label="Average rating"
@@ -118,7 +121,6 @@ export default function ReviewsCarousel({
                     </motion.div>
                 </div>
 
-
                 {/* Carousel Container */}
                 <div
                     ref={containerRef}
@@ -126,41 +128,48 @@ export default function ReviewsCarousel({
                     aria-roledescription="carousel"
                     aria-label="Customer testimonials carousel"
                 >
-
-                    {/* Slides wrapper -> horizontal flex, translateX to change slide */}
-                    <div
-                        className="flex transition-transform duration-500 ease-out"
-                        style={{ transform: `translateX(-${current * 100}%)` }}
+                    {/* Fade-in for slides wrapper when in view */}
+                    <motion.div
+                        initial={reduce ? undefined : { opacity: 0, y: 8 }}
+                        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                        transition={{ duration: reduce ? 0 : 0.5 }}
+                        {...(viewportProps ?? {})}
                     >
-                        {reviews.map((r, i) => (
-                            <div key={i} className="min-w-full px-4">
-                                <div className="bg-white/60 p-6 rounded-xl shadow-lg">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-border rounded-full flex items-center justify-center text-primary font-semibold">
-                                            {r.author
-                                                .split(" ")
-                                                .map((w) => w[0])
-                                                .slice(0, 2)
-                                                .join("")}
+                        {/* Slides wrapper -> horizontal flex, translateX to change slide */}
+                        <div
+                            className="flex transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(-${current * 100}%)` }}
+                        >
+                            {reviews.map((r, i) => (
+                                <div key={i} className="min-w-full px-4">
+                                    <div className="bg-white/60 p-6 rounded-xl shadow-lg">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-border rounded-full flex items-center justify-center text-primary font-semibold">
+                                                {r.author
+                                                    .split(" ")
+                                                    .map((w) => w[0])
+                                                    .slice(0, 2)
+                                                    .join("")}
+                                            </div>
+                                            <div>
+                                                <div className="font-semibold text-foreground">{r.author}</div>
+                                                {r.date && <div className="text-xs text-muted">{r.date}</div>}
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div className="font-semibold text-foreground">{r.author}</div>
-                                            {r.date && <div className="text-xs text-muted">{r.date}</div>}
+
+                                        <blockquote className="mt-4 italic text-foreground/90">{r.text}</blockquote>
+
+                                        <div className="mt-4 flex items-center gap-2">
+                                            {[...Array(5)].map((_, si) => (
+                                                <Star key={si} size={14} className="text-accent" />
+                                            ))}
+                                            <span className="text-xs text-muted ml-2">{rating.ratingCount} reviews</span>
                                         </div>
-                                    </div>
-
-                                    <blockquote className="mt-4 italic text-foreground/90">{r.text}</blockquote>
-
-                                    <div className="mt-4 flex items-center gap-2">
-                                        {[...Array(5)].map((_, si) => (
-                                            <Star key={si} size={14} className="text-accent" />
-                                        ))}
-                                        <span className="text-xs text-muted ml-2">{rating.ratingCount} reviews</span>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    </motion.div>
 
                     {/* Left/Right subtle overlay fades (optional, helpful for visual) */}
                     <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-[#e8efe8] to-transparent md:block hidden" />

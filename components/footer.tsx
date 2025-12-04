@@ -7,6 +7,7 @@ import {
     Mail,
     MapPin,
     Clock,
+    Heart,
 } from "lucide-react"
 
 export default function Footer() {
@@ -18,7 +19,7 @@ export default function Footer() {
                 <div>
                     <div className="flex items-center gap-3 mb-4">
                         <Image
-                            src="/images/logo.png"
+                            src="/images/logo-clean.png"
                             alt="Kopina Kura"
                             width={64}
                             height={64}
@@ -91,7 +92,10 @@ export default function Footer() {
             {/* Bottom */}
             <div className="border-t border-white/20 mt-10 pt-6 text-center text-sm text-gray-300">
                 <p>© {new Date().getFullYear()} Kopina Kura. All rights reserved.</p>
-                <p className="mt-1">Crafted with ❤️ in Bandung</p>
+
+                <p className="mt-1 flex items-center justify-center gap-1">
+                    Crafted with <Heart fill="#8B5E3C" className="w-4 h-4 text-muted" /> in Bandung
+                </p>
             </div>
         </footer>
     )

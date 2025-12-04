@@ -12,12 +12,12 @@ export default function Home() {
   return (
     <main>
       <Header siteTitle={content.site.name} />
-      <Hero content={content.hero} />
-      <section id="about" className="max-w-6xl mx-auto px-6 py-12">
+      <Hero />
+      <section id="about" className="max-w-6xl mx-auto py-12">
         <About data={content.about} />
       </section>
       <section id="menu" className="bg-white/60 py-12">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
           <MenuHighlights items={content.menu} />
         </div>
       </section>

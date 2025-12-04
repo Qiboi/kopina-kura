@@ -9,6 +9,9 @@ import { BookOpen } from "lucide-react";
 export default function MenuHighlights({ items }: any) {
     const reduce = useReducedMotion();
 
+    // shared viewport props (only if animations allowed)
+    const viewportProps = reduce ? undefined : { viewport: { once: true, amount: 0.25 } };
+
     return (
         <section aria-labelledby="menu-highlights" className="py-12">
             <div className="text-center mb-8">
@@ -28,10 +31,14 @@ export default function MenuHighlights({ items }: any) {
                     {items.map((it: any, idx: number) => (
                         <motion.article
                             key={it.title + idx}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: reduce ? 0 : 0.05 * idx, duration: 0.5 }}
-                            whileHover={reduce ? {} : { translateY: -6, boxShadow: "0 8px 30px rgba(16,24,40,0.12)" }}
+                            initial={reduce ? undefined : { opacity: 0, y: 12 }}
+                            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                            transition={{
+                                duration: reduce ? 0 : 0.5,
+                                delay: reduce ? 0 : idx * 0.06,
+                            }}
+                            {...viewportProps}
+                            whileHover={reduce ? undefined : { translateY: -6, boxShadow: "0 8px 30px rgba(16,24,40,0.12)" }}
                             className="rounded-2xl overflow-hidden bg-transparent"
                             aria-labelledby={`dish-${idx}`}
                         >
@@ -72,7 +79,6 @@ export default function MenuHighlights({ items }: any) {
                                         className="bg-primary text-primary-foreground px-4 py-2 rounded-md shadow-sm hover:opacity-95"
                                         aria-label={`Order ${it.title}`}
                                         onClick={() => {
-                                            // default behaviour: open order link if provided, otherwise scroll to contact
                                             if (it.orderLink) {
                                                 window.open(it.orderLink, "_blank");
                                             } else {

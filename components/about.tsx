@@ -53,16 +53,19 @@ export default function About({ data }: { data: AboutData }) {
         }
     };
 
+    const viewportProps = reduce ? undefined : { viewport: { once: true, amount: 0.3 } };
+
     return (
         <section className="py-16 bg-background">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
-                    {/* Left: Image with rating card */}
+
                     <div className="relative">
                         <motion.div
-                            initial={{ opacity: 0, y: 16 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={reduce ? undefined : { opacity: 0, y: 16 }}
+                            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                             transition={{ duration: reduce ? 0 : 0.6 }}
+                            {...viewportProps}
                             className="rounded-2xl shadow-2xl overflow-hidden"
                         >
                             <div className="relative">
@@ -77,11 +80,11 @@ export default function About({ data }: { data: AboutData }) {
                             </div>
                         </motion.div>
 
-                        {/* Rating Card overlapping */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.25, duration: reduce ? 0 : 0.45 }}
+                            initial={reduce ? undefined : { opacity: 0, scale: 0.92 }}
+                            whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.12, duration: reduce ? 0 : 0.45 }}
+                            {...viewportProps}
                             className="absolute -bottom-8 right-6 bg-primary rounded-xl text-white shadow-xl w-40 p-4 flex flex-col items-center"
                             role="region"
                             aria-label="Average rating"
@@ -92,7 +95,6 @@ export default function About({ data }: { data: AboutData }) {
                         </motion.div>
                     </div>
 
-                    {/* Right: Text and features */}
                     <div>
                         <div className="inline-block">
                             <span className="inline-block bg-accent/20 text-primary px-3 py-1 rounded-full text-sm font-bold">
@@ -101,32 +103,34 @@ export default function About({ data }: { data: AboutData }) {
                         </div>
 
                         <motion.h2
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: reduce ? 0 : 0.6 }}
+                            initial={reduce ? undefined : { opacity: 0, y: 10 }}
+                            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                            transition={{ delay: 0.06, duration: reduce ? 0 : 0.6 }}
+                            {...viewportProps}
                             className="mt-6 text-3xl md:text-4xl font-serif font-bold leading-tight"
                         >
                             When Cozy Café Feels Like <span className="block text-accent">Home</span>
                         </motion.h2>
 
                         <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.18, duration: reduce ? 0 : 0.7 }}
+                            initial={reduce ? undefined : { opacity: 0 }}
+                            whileInView={reduce ? undefined : { opacity: 1 }}
+                            transition={{ delay: 0.12, duration: reduce ? 0 : 0.7 }}
+                            {...viewportProps}
                             className="mt-6 text-neutral-700 max-w-xl"
                         >
                             {data.short ??
                                 "Kopina Kura blends classic charm with modern comfort. Our spacious interiors, rooftop lookout, vinyl music, and menu of comfort food and signature drinks create the perfect atmosphere for work, relaxation, and connection."}
                         </motion.p>
 
-                        {/* Features grid */}
                         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {data.features?.map((f) => (
+                            {data.features?.map((f, idx) => (
                                 <motion.article
                                     key={f.title}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: reduce ? 0 : 0.45 }}
+                                    initial={reduce ? undefined : { opacity: 0, y: 8 }}
+                                    whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                                    transition={{ duration: reduce ? 0 : 0.45, delay: reduce ? 0 : idx * 0.06 }}
+                                    {...viewportProps}
                                     className="flex gap-3 items-start"
                                 >
                                     <div className="w-11 h-11 flex items-center justify-center rounded-lg bg-primary shadow-sm">
