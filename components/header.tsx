@@ -21,6 +21,7 @@ export default function Header({ siteTitle }: { siteTitle: string }) {
                 <div className="hidden md:flex items-center gap-8 text-[15px]">
                     <a href="#about" className="transition-opacity hover:opacity-60 font-semibold">About</a>
                     <a href="#menu" className="transition-opacity hover:opacity-60 font-semibold">Menu</a>
+                    <a href="#news" className="transition-opacity hover:opacity-60 font-semibold">News</a>
                     <a href="#gallery" className="transition-opacity hover:opacity-60 font-semibold">Gallery</a>
                     <a href="#reviews" className="transition-opacity hover:opacity-60 font-semibold">Reviews</a>
                     <a href="#contact" className="px-4 py-2 rounded-lg bg-secondary text-white shadow hover:opacity-90 transition font-bold">

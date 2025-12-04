@@ -7,6 +7,7 @@ import MenuHighlights from "@/components/menu-highlights";
 import Reviews from "@/components/reviews";
 import Contact from "@/components/contact";
 import { content } from "@/lib/content";
+import PromoSection from "@/components/promo-section";
 
 export default function Home() {
   return (
@@ -20,6 +21,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <MenuHighlights items={content.menu} />
         </div>
+      </section>
+      <section id="promo" className="py-12 bg-[#e8efe8]">
+      <PromoSection items={content.news} />
       </section>
       <section id="gallery" className="py-12 bg-primary">
         <div className="max-w-6xl mx-auto">

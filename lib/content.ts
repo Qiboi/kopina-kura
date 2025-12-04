@@ -114,4 +114,35 @@ export const content = {
         whatsapp: "https://wa.me/6281234567890",
         mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.7993360783967!2d107.62616247604514!3d-6.914579167676875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e71097df179b%3A0x7689c8d628bc1f70!2sKopina%20Kura!5e0!3m2!1sid!2sid!4v1764786463167!5m2!1sid!2sid",
     },
+
+    news: [
+        {
+            id: "summer-rooftop-jam-2025",
+            type: "event", // "promo" | "event" | "news"
+            title: "Summer Rooftop Jam — Live Vinyl Night",
+            date: "2025-07-10",
+            excerpt: "Nikmati live vinyl & diskon 10% untuk semua signature drinks di rooftop setiap Jumat.",
+            image: "/images/events/rooftop-jam.png",
+            location: "Kopina Kura — Rooftop",
+            cta: { label: "See details", href: "/events/summer-rooftop-jam-2025" }
+        },
+        {
+            id: "iced-latte-promo-june",
+            type: "promo",
+            title: "Promo Iced Latte — Buy 1 Get 1",
+            date: "2025-06-05",
+            excerpt: "Minggu ini, beli 1 Iced Latte dapat 1 gratis. Berlaku di semua outlet.",
+            image: "/images/promos/iced-latte.png",
+            cta: { label: "Order Now", href: "#menu" }
+        },
+        {
+            id: "behind-the-beans",
+            type: "news",
+            title: "Behind The Beans — New Single Origin Arrival",
+            date: "2025-05-20",
+            excerpt: "Kami kedatangan single origin dari Takengon — rasanya fruity & chocolatey.",
+            image: "/images/news/beans.png",
+            cta: { label: "Read more", href: "/news/behind-the-beans" }
+        }
+    ],
 };
