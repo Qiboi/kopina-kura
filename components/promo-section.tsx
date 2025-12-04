@@ -74,7 +74,7 @@ export default function PromoSection({ items }: { items: NewsItem[] }) {
 
                 {/* CTA to all posts */}
                 <div className="mt-8 flex justify-center">
-                    <Link href="/news" className="inline-flex items-center">
+                    <Link href="#" className="inline-flex items-center">
                         <Button size="lg" className="bg-muted text-white px-6 py-3">View all posts</Button>
                     </Link>
                 </div>

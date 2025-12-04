@@ -15,6 +15,7 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 /*
   Contact (shadcn-adjusted)
@@ -105,9 +106,9 @@ export default function Contact({ info }: any) {
                                     <div>
                                         <div className="font-semibold text-slate-800">Contact</div>
                                         <div className="text-sm text-muted mt-1">
-                                            <a href={`mailto:${info?.email ?? "hello@kopinakura.example"}`} className="underline">
+                                            <Link href={`mailto:${info?.email ?? "hello@kopinakura.example"}`} className="underline">
                                                 {info?.email ?? "hello@kopinakura.example"}
-                                            </a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

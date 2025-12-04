@@ -124,7 +124,8 @@ export const content = {
             excerpt: "Nikmati live vinyl & diskon 10% untuk semua signature drinks di rooftop setiap Jumat.",
             image: "/images/events/rooftop-jam.png",
             location: "Kopina Kura — Rooftop",
-            cta: { label: "See details", href: "/events/summer-rooftop-jam-2025" }
+            // cta: { label: "See details", href: "/events/summer-rooftop-jam-2025" }
+            cta: { label: "See details", href: "#" }
         },
         {
             id: "iced-latte-promo-june",
@@ -133,7 +134,8 @@ export const content = {
             date: "2025-06-05",
             excerpt: "Minggu ini, beli 1 Iced Latte dapat 1 gratis. Berlaku di semua outlet.",
             image: "/images/promos/iced-latte.png",
-            cta: { label: "Order Now", href: "#menu" }
+            // cta: { label: "Order Now", href: "#menu" }
+            cta: { label: "Order Now", href: "#" }
         },
         {
             id: "behind-the-beans",
@@ -142,7 +144,8 @@ export const content = {
             date: "2025-05-20",
             excerpt: "Kami kedatangan single origin dari Takengon — rasanya fruity & chocolatey.",
             image: "/images/news/beans.png",
-            cta: { label: "Read more", href: "/news/behind-the-beans" }
+            // cta: { label: "Read more", href: "/news/behind-the-beans" }
+            cta: { label: "Read more", href: "#" }
         }
     ],
 };
