@@ -18,10 +18,12 @@ import {
 import Link from "next/link";
 
 /*
-  Contact (shadcn-adjusted)
-  - Replace plain containers with shadcn Card + CardContent where appropriate
-  - Use shadcn Input/Textarea for form controls
-  - Keep same behavior: whileInView animations, reduced-motion respectful
+  Contact (responsive improvements)
+  - Responsive grid: 1 column on small, 2 columns on lg
+  - Left column becomes sticky on large screens
+  - iframe/map height responsive
+  - Buttons stack on mobile and become inline on larger screens
+  - Fixed gradient classname and some accessibility tweaks
 */
 
 export default function Contact({ info }: any) {
@@ -64,12 +66,13 @@ export default function Contact({ info }: any) {
 
     return (
         <section id="contact" aria-labelledby="contact-heading" className="py-16">
-            <div className="mx-auto px-6">
-                <div className="text-center mb-10">
+            {/* Use padding only; page.tsx wraps with a max-w container */}
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-8">
                     <span className="inline-block bg-primary text-white px-3 py-1 rounded-full text-sm font-bold">
                         Visit Us
                     </span>
-                    <h1 id="contact-heading" className="mt-4 text-3xl md:text-4xl font-serif font-bold text-slate-900">
+                    <h1 id="contact-heading" className="mt-4 text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-slate-900">
                         Find Your Way to Kopina Kura
                     </h1>
                     <p className="mt-2 text-muted max-w-2xl mx-auto text-sm">
@@ -77,96 +80,99 @@ export default function Contact({ info }: any) {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     {/* LEFT: contact cards + CTA */}
                     <motion.div
                         initial={reduce ? undefined : { opacity: 0, y: 8 }}
                         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                         transition={{ duration: reduce ? 0 : 0.45 }}
                         {...(viewportProps ?? {})}
-                        className="space-y-6"
+                        className="space-y-6 lg:pr-4"
                     >
-                        {/* Contact info card (shadcn Card) */}
-                        <Card className="bg-[#EEF6F0]">
-                            <CardContent>
-                                <div className="flex items-start gap-4 mb-4">
-                                    <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
-                                        <Phone size={18} />
-                                    </div>
-                                    <div>
-                                        <div className="font-semibold text-slate-800">Opening Hours</div>
-                                        <div className="text-sm text-muted mt-1">{info?.hours ?? "Mon–Sun: 08:00 – 22:00"}</div>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4 mb-4">
-                                    <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
-                                        <Mail size={18} />
-                                    </div>
-                                    <div>
-                                        <div className="font-semibold text-slate-800">Contact</div>
-                                        <div className="text-sm text-muted mt-1">
-                                            <Link href={`mailto:${info?.email ?? "hello@kopinakura.example"}`} className="underline">
-                                                {info?.email ?? "hello@kopinakura.example"}
-                                            </Link>
+                        <div className="lg:sticky lg:top-24 lg:self-start space-y-6">
+                            {/* Contact info card (shadcn Card) */}
+                            <Card className="bg-[#EEF6F0]">
+                                <CardContent>
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
+                                            <Phone size={18} />
+                                        </div>
+                                        <div>
+                                            <div className="font-semibold text-slate-800">Opening Hours</div>
+                                            <div className="text-sm text-muted mt-1">{info?.hours ?? "Mon–Sun: 08:00 – 22:00"}</div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="flex items-start gap-4">
-                                    <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
-                                        <MapPin size={18} />
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
+                                            <Mail size={18} />
+                                        </div>
+                                        <div>
+                                            <div className="font-semibold text-slate-800">Contact</div>
+                                            <div className="text-sm text-muted mt-1">
+                                                <Link href={`mailto:${info?.email ?? "hello@kopinakura.example"}`} className="underline">
+                                                    {info?.email ?? "hello@kopinakura.example"}
+                                                </Link>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div className="font-semibold text-slate-800">Location</div>
-                                        <div className="text-sm text-muted mt-1">Bandung, West Java — Indonesia</div>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
 
-                        {/* Reserve CTA (shadcn Card, styled) */}
-                        <motion.div
-                            initial={reduce ? undefined : { opacity: 0, y: 10 }}
-                            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                            transition={{ delay: reduce ? 0 : 0.08, duration: reduce ? 0 : 0.45 }}
-                            {...(viewportProps ?? {})}
-                        >
-                            <Card className="overflow-hidden shadow-lg bg-linear-to-r from-[#0f5132] to-[#123f2b] text-white">
-                                <CardContent>
-                                    <div className="font-bold text-lg">Reserve Your Table</div>
-                                    <div className="text-sm text-white/80 mt-2">Book your spot for the perfect coffee experience</div>
-                                    <div className="mt-4">
-                                        <Button
-                                            onClick={() => (info?.whatsapp ? openWhatsApp() : document.querySelector("#contact-form")?.scrollIntoView({ behavior: "smooth" }))}
-                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white text-[#0f5132] font-medium shadow hover:text-white"
-                                        >
-                                            <PhoneCall />
-                                            Book via WhatsApp
-                                        </Button>
+                                    <div className="flex items-start gap-4">
+                                        <div className="shrink-0 w-12 h-12 rounded-full bg-[#154c38] inline-flex items-center justify-center text-white">
+                                            <MapPin size={18} />
+                                        </div>
+                                        <div>
+                                            <div className="font-semibold text-slate-800">Location</div>
+                                            <div className="text-sm text-muted mt-1">{info?.address ?? "Bandung, West Java — Indonesia"}</div>
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
-                        </motion.div>
 
-                        {/* small social / address card (shadcn Card) */}
-                        <Card className="bg-[#EEF6F0]">
-                            <CardContent>
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <div className="font-semibold text-slate-800">Follow & Visit</div>
-                                        <div className="text-sm text-muted mt-1">Bandung, Indonesia</div>
+                            {/* Reserve CTA (shadcn Card, styled) */}
+                            <motion.div
+                                initial={reduce ? undefined : { opacity: 0, y: 10 }}
+                                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                                transition={{ delay: reduce ? 0 : 0.08, duration: reduce ? 0 : 0.45 }}
+                                {...(viewportProps ?? {})}
+                            >
+                                <Card className="overflow-hidden shadow-lg bg-linear-to-r from-[#0f5132] to-[#123f2b] text-white">
+                                    <CardContent>
+                                        <div className="font-bold text-lg">Reserve Your Table</div>
+                                        <div className="text-sm text-white/80 mt-2">Book your spot for the perfect coffee experience</div>
+                                        <div className="mt-4">
+                                            <Button
+                                                onClick={() => (info?.whatsapp ? openWhatsApp() : document.querySelector("#contact-form")?.scrollIntoView({ behavior: "smooth" }))}
+                                                className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white text-[#0f5132] font-medium shadow hover:text-white w-full sm:w-auto justify-center"
+                                                aria-label="Book via WhatsApp"
+                                            >
+                                                <PhoneCall />
+                                                Book via WhatsApp
+                                            </Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
+
+                            {/* small social / address card (shadcn Card) */}
+                            <Card className="bg-[#EEF6F0]">
+                                <CardContent>
+                                    <div className="flex items-center justify-between gap-4">
+                                        <div>
+                                            <div className="font-semibold text-slate-800">Follow & Visit</div>
+                                            <div className="text-sm text-muted mt-1">{info?.city ?? "Bandung, Indonesia"}</div>
+                                        </div>
+                                        <button
+                                            onClick={() => window.open(info?.instagram || "https://www.instagram.com/kopinakura", "_blank")}
+                                            aria-label="Open Instagram"
+                                            className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#E1306C] text-white"
+                                        >
+                                            <Instagram size={14} /> Instagram
+                                        </button>
                                     </div>
-                                    <button
-                                        onClick={() => window.open(info?.instagram || "https://www.instagram.com/kopinakura", "_blank")}
-                                        aria-label="Open Instagram"
-                                        className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-[#E1306C] text-white"
-                                    >
-                                        <Instagram size={14} /> Instagram
-                                    </button>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
+                        </div>
                     </motion.div>
 
                     {/* RIGHT: map on top, reservation form below */}
@@ -186,9 +192,14 @@ export default function Contact({ info }: any) {
                             className="rounded-2xl overflow-hidden bg-secondary shadow-lg"
                         >
                             {info?.mapEmbed ? (
-                                <iframe title="map" src={info.mapEmbed} className="w-full h-56 border-0" loading="lazy" />
+                                <iframe
+                                    title="map"
+                                    src={info.mapEmbed}
+                                    className="w-full h-40 sm:h-56 md:h-72 lg:h-80 border-0"
+                                    loading="lazy"
+                                />
                             ) : (
-                                <div className="w-full h-56 flex items-center justify-center bg-[#F0F5EF] text-muted">
+                                <div className="w-full h-40 sm:h-56 md:h-72 lg:h-80 flex items-center justify-center bg-[#F0F5EF] text-muted">
                                     <div className="text-center px-4">
                                         <MapPin className="mx-auto mb-2 text-[#154c38]" />
                                         <div className="font-semibold text-slate-800">Bandung, Indonesia</div>
@@ -208,15 +219,16 @@ export default function Contact({ info }: any) {
                             {...(viewportProps ?? {})}
                             className="bg-[#EEF6F0] rounded-2xl p-6 shadow-lg"
                         >
-                            <div className="grid sm:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <label className="flex flex-col">
                                     <span className="text-sm font-medium text-slate-800">Name</span>
                                     <Input
                                         required
                                         value={form.name}
                                         onChange={(e) => update("name", e.target.value)}
-                                        className="mt-1 bg-white/60"
+                                        className="mt-1 bg-white/60 w-full"
                                         placeholder="Your name"
+                                        aria-label="Name"
                                     />
                                 </label>
 
@@ -226,8 +238,9 @@ export default function Contact({ info }: any) {
                                         required
                                         value={form.phone}
                                         onChange={(e) => update("phone", e.target.value)}
-                                        className="mt-1 bg-white/60"
+                                        className="mt-1 bg-white/60 w-full"
                                         placeholder="+62 812 3456 7890"
+                                        aria-label="Phone"
                                     />
                                 </label>
 
@@ -238,7 +251,8 @@ export default function Contact({ info }: any) {
                                         type="date"
                                         value={form.date}
                                         onChange={(e) => update("date", e.target.value)}
-                                        className="mt-1 bg-white/60"
+                                        className="mt-1 bg-white/60 w-full"
+                                        aria-label="Date"
                                     />
                                 </label>
 
@@ -249,17 +263,15 @@ export default function Contact({ info }: any) {
                                         type="time"
                                         value={form.time}
                                         onChange={(e) => update("time", e.target.value)}
-                                        className="mt-1 bg-white/60"
+                                        className="mt-1 bg-white/60 w-full"
+                                        aria-label="Time"
                                     />
                                 </label>
 
                                 <label className="flex flex-col sm:col-span-2">
                                     <span className="text-sm font-medium text-slate-800">Party size</span>
-                                    <Select
-                                        value={String(form.party)}
-                                        onValueChange={(value) => update("party", value)}
-                                    >
-                                        <SelectTrigger className="mt-1 w-full bg-white/60">
+                                    <Select value={String(form.party)} onValueChange={(value) => update("party", value)}>
+                                        <SelectTrigger className="mt-1 w-full bg-white/60" aria-label="Party size">
                                             <SelectValue placeholder="Select party" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -277,14 +289,18 @@ export default function Contact({ info }: any) {
                                     <Textarea
                                         value={form.note}
                                         onChange={(e) => update("note", e.target.value)}
-                                        className="mt-1 bg-white/60"
+                                        className="mt-1 bg-white/60 w-full"
                                         placeholder="Allergies, requests, etc."
+                                        aria-label="Notes"
                                     />
                                 </label>
                             </div>
 
-                            <div className="mt-4 flex gap-3 items-center">
-                                <Button type="submit" className="bg-[#154c38] text-white px-4 py-2">
+                            <div className="mt-4 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                                <Button
+                                    type="submit"
+                                    className="bg-[#154c38] text-white px-4 py-2 w-full sm:w-auto justify-center"
+                                >
                                     Request Reservation
                                 </Button>
 
@@ -294,6 +310,7 @@ export default function Contact({ info }: any) {
                                         e.preventDefault();
                                         openWhatsApp();
                                     }}
+                                    className="w-full sm:w-auto justify-center"
                                 >
                                     Message on WhatsApp
                                 </Button>
