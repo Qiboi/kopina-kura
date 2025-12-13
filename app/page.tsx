@@ -8,6 +8,7 @@ import Reviews from "@/components/reviews";
 import Contact from "@/components/contact";
 import { content } from "@/lib/content";
 import PromoSection from "@/components/promo-section";
+import BackToTop from "@/components/back-to-top";
 
 export default function Home() {
   return (
@@ -41,6 +42,7 @@ export default function Home() {
         </div>
       </section>
       <Footer />
+      <BackToTop threshold={300} bottom={28} right={28} />
     </main>
   )
 }
